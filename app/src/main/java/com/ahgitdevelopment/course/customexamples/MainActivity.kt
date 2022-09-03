@@ -42,7 +42,7 @@ fun AppList() {
         )
         ItemList(
             "Navigate between Fragments",
-            onClick = { context.startActivity(Intent(context, ActivityA::class.java)) }
+            onClick = { /* TODO */ }
         )
     }
 }

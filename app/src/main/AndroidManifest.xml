@@ -19,7 +19,6 @@
             android:theme="@style/Theme.CustomExamples">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -27,13 +26,13 @@
         <activity
             android:name=".features.activities.ActivityA"
             android:exported="false"
-            android:label="@string/title_activity_activity"
+            android:label="@string/title_activity_activity_a"
             android:theme="@style/Theme.CustomExamples" />
 
         <activity
             android:name=".features.activities.ActivityB"
             android:exported="false"
-            android:label="@string/title_activity_activity"
+            android:label="@string/title_activity_activity_b"
             android:theme="@style/Theme.CustomExamples" />
     </application>
 

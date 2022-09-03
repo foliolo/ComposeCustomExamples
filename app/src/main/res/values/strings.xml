@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CustomExamples</string>
-    <string name="title_activity_activity">ActivityA</string>
+    <string name="title_activity_activity_a">ActivityA</string>
+    <string name="title_activity_activity_b">ActivityB</string>
 </resources>

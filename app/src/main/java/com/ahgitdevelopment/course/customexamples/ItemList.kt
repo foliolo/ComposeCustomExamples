@@ -20,16 +20,10 @@ fun ItemList(title: String, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick }
+            .clickable(onClick = onClick)
             .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Icon(
-            imageVector = Icons.Filled.ArrowRight,
-            contentDescription = null,
-            modifier = Modifier.padding(16.dp),
-            tint = Color.Black
-        )
         Text(
             text = title,
             fontSize = 16.sp,
