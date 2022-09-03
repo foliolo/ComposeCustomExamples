@@ -42,7 +42,6 @@ fun GreetingA() {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(),
-
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
