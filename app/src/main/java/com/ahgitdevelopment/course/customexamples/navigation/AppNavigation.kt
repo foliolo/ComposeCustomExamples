@@ -9,11 +9,15 @@ import androidx.navigation.navArgument
 import com.ahgitdevelopment.course.customexamples.features.screens.AppList
 import com.ahgitdevelopment.course.customexamples.features.screens.ScreenA
 import com.ahgitdevelopment.course.customexamples.features.screens.ScreenB
+import com.ahgitdevelopment.course.customexamples.features.screens.SplashScreen
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = AppScreens.AppList.route) {
+    NavHost(navController = navController, startDestination = AppScreens.SplashScreen.route) {
+        composable(route = AppScreens.SplashScreen.route) {
+            SplashScreen(navController)
+        }
         composable(route = AppScreens.AppList.route) {
             AppList(navController)
         }

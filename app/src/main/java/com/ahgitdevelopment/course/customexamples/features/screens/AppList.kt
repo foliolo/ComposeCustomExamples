@@ -25,5 +25,11 @@ fun AppList(navController: NavController) {
                 navController.navigate(AppScreens.ScreenA.route)
             }
         )
+        ItemList(
+            "Splash Screen",
+            onClick = {
+                navController.navigate(AppScreens.SplashScreen.route)
+            }
+        )
     }
 }
