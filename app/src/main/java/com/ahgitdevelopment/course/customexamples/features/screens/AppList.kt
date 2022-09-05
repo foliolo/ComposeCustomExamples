@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.ahgitdevelopment.course.customexamples.ItemList
 import com.ahgitdevelopment.course.customexamples.features.activities.ActivityA
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
@@ -13,6 +15,12 @@ import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
 fun AppList(navController: NavController) {
     val context = LocalContext.current
     Column {
+        ItemList(
+            "Splash Screen",
+            onClick = {
+                navController.navigate(AppScreens.SplashScreen.route)
+            }
+        )
         ItemList(
             "Navigate between Activities",
             onClick = {
@@ -26,4 +34,11 @@ fun AppList(navController: NavController) {
             }
         )
     }
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun DefaultPreviewAppList() {
+    val navController = rememberNavController()
+    AppList(navController)
 }
