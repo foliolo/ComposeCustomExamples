@@ -12,7 +12,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,14 +25,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ahgitdevelopment.course.customexamples.R
-import com.ahgitdevelopment.course.customexamples.features.screens.splash.SplashViewModel.Companion.SPLASH_TIMER
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SplashScreen(navController: NavController, viewModel: SplashViewModel = viewModel()) {
 
-    val timer by viewModel.timer.observeAsState(SPLASH_TIMER)
+    val timer by viewModel.timer.collectAsStateWithLifecycle()
     val finish by viewModel.finish.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = finish) {
@@ -43,11 +41,11 @@ fun SplashScreen(navController: NavController, viewModel: SplashViewModel = view
         }
     }
 
-    Splash(timer, finish)
+    Splash(timer)
 }
 
 @Composable
-fun Splash(timer: Long, finish: Boolean) {
+fun Splash(timer: Long) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
