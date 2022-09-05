@@ -22,6 +22,6 @@ class SplashViewModel : ViewModel() {
     }
 
     companion object {
-        const val SPLASH_TIMER: Long = 5_000
+        const val SPLASH_TIMER: Long = 3_000
     }
 }
