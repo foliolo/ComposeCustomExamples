@@ -13,7 +13,7 @@ import com.ahgitdevelopment.course.customexamples.features.screens.gonbranch.Scr
 import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreResultScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.splash.SplashScreen
-import com.ahgitdevelopment.course.customexamples.features.screens.ExampleListScreen
+import com.ahgitdevelopment.course.customexamples.features.screens.LazyListScreen
 
 @Composable
 fun AppNavigation() {
@@ -38,7 +38,7 @@ fun AppNavigation() {
             ScreenB(navController, it.arguments?.getString("text"))
         }
         composable(route = AppScreens.ExampleListScreen.route) {
-            ExampleListScreen(navController)
+            LazyListScreen(navController)
         }
         composable(route = AppScreens.DataStoreScreen.route) {
             DataStoreScreen(navController)
