@@ -27,16 +27,9 @@ import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 fun ScreenB(navController: NavController, param: String?) {
 
     Scaffold(topBar = {
-        TopAppBar(
-            title = { Text(AppScreens.ScreenB.route) },
-            navigationIcon = {
-                Icon(imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Arrow Back",
-                    modifier = Modifier.clickable {
-                        navController.popBackStack()
-                    }
-                )
-            }
+        com.ahgitdevelopment.course.customexamples.features.components.TopAppBar(
+            navController = navController,
+            title = AppScreens.ScreenB.route
         )
     }, content = {
         Column(

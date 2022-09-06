@@ -6,6 +6,7 @@ sealed class AppScreens(val route: String) {
 
     object ScreenA : AppScreens("ScreenA")
     object ScreenB : AppScreens("ScreenB")
+    object ExampleListScreen : AppScreens("ExampleListScreen")
 
     object DataStoreScreen : AppScreens("DataStoreScreen")
     object DataStoreResultScreen : AppScreens("DataStoreResultScreen")

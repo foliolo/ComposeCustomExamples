@@ -2,4 +2,7 @@
     <string name="app_name">CustomExamples</string>
     <string name="title_activity_activity_a">ActivityA</string>
     <string name="title_activity_activity_b">ActivityB</string>
+
+    <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
 </resources>
