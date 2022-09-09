@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.ahgitdevelopment.course.customexamples.features.screens.AppList
 import com.ahgitdevelopment.course.customexamples.features.screens.ScreenA
 import com.ahgitdevelopment.course.customexamples.features.screens.ScreenB
+import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.splash.SplashScreen
 
 @Composable
@@ -31,6 +32,9 @@ fun AppNavigation() {
             })
         ) {
             ScreenB(navController, it.arguments?.getString("text"))
+        }
+        composable(route = AppScreens.DataStoreScreen.route) {
+            DataStoreScreen(navController)
         }
     }
 }

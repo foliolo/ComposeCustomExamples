@@ -7,7 +7,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.ahgitdevelopment.course.customexamples.ItemList
 import com.ahgitdevelopment.course.customexamples.features.activities.ActivityA
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
 
@@ -31,6 +30,12 @@ fun AppList(navController: NavController) {
             "Navigate between composables",
             onClick = {
                 navController.navigate(AppScreens.ScreenA.route)
+            }
+        )
+        ItemList(
+            "Data Store Example ",
+            onClick = {
+                navController.navigate(AppScreens.DataStoreScreen.route)
             }
         )
     }
