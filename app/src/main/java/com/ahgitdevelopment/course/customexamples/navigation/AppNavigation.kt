@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.ahgitdevelopment.course.customexamples.features.screens.AppList
 import com.ahgitdevelopment.course.customexamples.features.screens.ScreenA
 import com.ahgitdevelopment.course.customexamples.features.screens.ScreenB
+import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreResult
 import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.splash.SplashScreen
 
@@ -35,6 +36,9 @@ fun AppNavigation() {
         }
         composable(route = AppScreens.DataStoreScreen.route) {
             DataStoreScreen(navController)
+        }
+        composable(route = AppScreens.DataStoreResult.route) {
+            DataStoreResult()
         }
     }
 }

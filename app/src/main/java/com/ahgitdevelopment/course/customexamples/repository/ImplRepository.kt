@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 
 const val DataStore_NAME = "PHONEBOOK"
 
-val Context.datastore : DataStore< Preferences> by  preferencesDataStore(name = DataStore_NAME)
+val Context.datastore : DataStore< Preferences> by  preferencesDataStore(name = "ass")
 
 class ImplRepository(private val context: Context) : Repository {
 
