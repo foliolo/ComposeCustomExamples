@@ -18,6 +18,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -34,87 +37,75 @@ import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun DataStoreScreen(
-    navController: NavController,
-    viewModel: DataStoreViewModel = hiltViewModel()
+    navController: NavController, viewModel: DataStoreViewModel = hiltViewModel()
 ) {
-    val viewLifecycleOwner = LocalLifecycleOwner.current
-
-    val phoneBook by viewModel.phoneBook.collectAsStateWithLifecycle(
-        initialValue = PhoneBook(
-            name = "",
-            address = "",
-            phone = ""
-        ),
-        lifecycleOwner = viewLifecycleOwner
-    )
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val phoneBook by viewModel.phoneBook.collectAsStateWithLifecycle(lifecycleOwner)
 
     DataStoreContent(
         phoneBook = phoneBook,
-//        setName = { viewModel.setName(it) },
-//        setAddress = { viewModel.setAddress(it) },
-//        setPhone = { viewModel.setPhone(it) },
-        onSave = { viewModel.saveData(it) },
-        navigateEvent = { navController.navigate(AppScreens.DataStoreResult.route) }
-    )
+        onSave = { viewModel.saveData(it) }
+    ) {
+        navController.navigate(AppScreens.DataStoreResultScreen.route)
+    }
 }
 
 @Composable
 fun DataStoreContent(
     phoneBook: PhoneBook,
-//    setName: (String) -> Unit,
-//    setAddress: (String) -> Unit,
-//    setPhone: (String) -> Unit,
     onSave: (PhoneBook) -> Unit,
     navigateEvent: () -> Unit
 ) {
+    // val phone by rememberSaveable(stateSaver = PhoneBookSaver) { mutableStateOf(phoneBook) }
+
+    // If this state is needed in the viewModel in order to do something,
+    // hoisting this will be needed.
+    var name by rememberSaveable { mutableStateOf(phoneBook.name) }
+    var phone by rememberSaveable { mutableStateOf(phoneBook.phone) }
+    var address by rememberSaveable { mutableStateOf(phoneBook.address) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
     ) {
+
         Text(
-            text = "Hello, ${phoneBook.name}!",
+            text = "Hello, ${name}!",
             modifier = Modifier.padding(bottom = 8.dp),
             style = MaterialTheme.typography.h5
         )
-        OutlinedTextField(
-            value = phoneBook.name,
-            onValueChange = { phoneBook.name },
-            label = { Text(text = "Name...") }
-        )
-        OutlinedTextField(
-            value = phoneBook.phone,
-            onValueChange = { phoneBook.phone },
-            label = { Text(text = "Phone...") }
-        )
-        OutlinedTextField(
-            value = phoneBook.address,
-            onValueChange = { phoneBook.address },
-            label = { Text(text = "Address...") }
-        )
+        OutlinedTextField(value = name,
+            onValueChange = { name = it },
+            label = { Text(text = "Name...") })
+
+        OutlinedTextField(value = phone,
+            onValueChange = { phone = it },
+            label = { Text(text = "Phone...") })
+
+        OutlinedTextField(value = address,
+            onValueChange = { address = it },
+            label = { Text(text = "Address...") })
+
         Spacer(modifier = Modifier.height(10.dp))
+
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(
-                onClick = {
-                    onSave(
-                        PhoneBook(
-                            name = phoneBook.name,
-                            address = phoneBook.address,
-                            phone = phoneBook.phone
-                        )
+            Button(onClick = {
+                onSave(
+                    PhoneBook(
+                        name = name,
+                        phone = phone,
+                        address = address
                     )
-                }
-            ) {
+                )
+            }) {
                 Text(text = "Save Data")
             }
             Button(
-                onClick = navigateEvent,
-                colors = ButtonDefaults.buttonColors(
+                onClick = navigateEvent, colors = ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colors.secondary
                 )
             ) {
@@ -126,8 +117,7 @@ fun DataStoreContent(
                         text = "Next Screen"
                     )
                     Icon(
-                        imageVector = Icons.Default.ArrowRight,
-                        contentDescription = "Flecha derecha"
+                        imageVector = Icons.Default.ArrowRight, contentDescription = "Right arrow"
                     )
                 }
             }
@@ -141,12 +131,6 @@ fun DefaultPreviewDataStoreContent() {
     CustomExamplesTheme {
         DataStoreContent(
             phoneBook = PhoneBook("name", "address", "phone"),
-//            phone = "212345",
-//            address = "address",
-//            name = "name",
-//            setPhone = { "phone" },
-//            setAddress = { "setAddress" },
-//            setName = { "setName" },
             onSave = {},
             navigateEvent = {}
         )

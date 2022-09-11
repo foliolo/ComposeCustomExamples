@@ -1,16 +1,17 @@
-package com.ahgitdevelopment.course.customexamples.repository.local
+package com.ahgitdevelopment.course.customexamples.repository.local.phonebook
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.ahgitdevelopment.course.customexamples.model.PhoneBook
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class PhoneBookLocalRepository @Inject constructor(
+class PhoneBookRepositoryImpl @Inject constructor(
     private val userPreferencesRepository: DataStore<Preferences>
-) : LocalRepository {
+) : PhoneBookRepository {
 
     override suspend fun savePhoneBook(phoneBook: PhoneBook) {
         userPreferencesRepository.edit { preferences ->
@@ -20,13 +21,14 @@ class PhoneBookLocalRepository @Inject constructor(
         }
     }
 
-    override suspend fun getPhoneBook() = userPreferencesRepository.data.map { preferences ->
-        PhoneBook(
-            name = preferences[NAME_KEY] ?: "",
-            address = preferences[ADDRESS_KEY] ?: "",
-            phone = preferences[PHONE_NUMBER_KEY] ?: ""
-        )
-    }
+    override suspend fun getPhoneBook(): Flow<PhoneBook> =
+        userPreferencesRepository.data.map { preferences ->
+            PhoneBook(
+                name = preferences[NAME_KEY] ?: "",
+                address = preferences[ADDRESS_KEY] ?: "",
+                phone = preferences[PHONE_NUMBER_KEY] ?: ""
+            )
+        }
 
 
     companion object {
