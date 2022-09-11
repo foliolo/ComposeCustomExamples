@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ahgitdevelopment.course.customexamples.features.activities.ActivityA
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
+import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 
 @Composable
 fun AppList(navController: NavController) {
@@ -44,6 +45,8 @@ fun AppList(navController: NavController) {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun DefaultPreviewAppList() {
-    val navController = rememberNavController()
-    AppList(navController)
+    CustomExamplesTheme {
+        val navController = rememberNavController()
+        AppList(navController)
+    }
 }

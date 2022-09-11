@@ -20,41 +20,52 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.ahgitdevelopment.course.customexamples.model.PhoneBook
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
+import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-fun DataStoreScreen(navController: NavController, viewModel: DataStoreViewModel = viewModel()) {
-    val phone by viewModel.phoneState.collectAsStateWithLifecycle()
-    val address by viewModel.addressState.collectAsStateWithLifecycle()
-    val name by viewModel.nameState.collectAsStateWithLifecycle()
+fun DataStoreScreen(
+    navController: NavController,
+    viewModel: DataStoreViewModel = hiltViewModel()
+) {
+    val viewLifecycleOwner = LocalLifecycleOwner.current
+
+    val phoneBook by viewModel.phoneBook.collectAsStateWithLifecycle(
+        initialValue = PhoneBook(
+            name = "",
+            address = "",
+            phone = ""
+        ),
+        lifecycleOwner = viewLifecycleOwner
+    )
+
     DataStoreContent(
-        viewModel = viewModel,
-        navController = navController,
-        phone = phone,
-        address = address,
-        name = name,
-        setPhone = { viewModel.setPhone(it) },
-        setAddress = { viewModel.setAddress(it) },
-        setName = { viewModel.setName(it) }
+        phoneBook = phoneBook,
+//        setName = { viewModel.setName(it) },
+//        setAddress = { viewModel.setAddress(it) },
+//        setPhone = { viewModel.setPhone(it) },
+        onSave = { viewModel.saveData(it) },
+        navigateEvent = { navController.navigate(AppScreens.DataStoreResult.route) }
     )
 }
 
 @Composable
 fun DataStoreContent(
-    viewModel: DataStoreViewModel,
-    navController: NavController,
-    phone: String,
-    address: String,
-    name: String,
-    setPhone: (String) -> Unit,
-    setAddress: (String) -> Unit,
-    setName: (String) -> Unit
+    phoneBook: PhoneBook,
+//    setName: (String) -> Unit,
+//    setAddress: (String) -> Unit,
+//    setPhone: (String) -> Unit,
+    onSave: (PhoneBook) -> Unit,
+    navigateEvent: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -64,23 +75,23 @@ fun DataStoreContent(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Hello, $name!",
+            text = "Hello, ${phoneBook.name}!",
             modifier = Modifier.padding(bottom = 8.dp),
             style = MaterialTheme.typography.h5
         )
         OutlinedTextField(
-            value = name,
-            onValueChange = setName,
+            value = phoneBook.name,
+            onValueChange = { phoneBook.name },
             label = { Text(text = "Name...") }
         )
         OutlinedTextField(
-            value = phone,
-            onValueChange = setPhone,
+            value = phoneBook.phone,
+            onValueChange = { phoneBook.phone },
             label = { Text(text = "Phone...") }
         )
         OutlinedTextField(
-            value = address,
-            onValueChange = setAddress,
+            value = phoneBook.address,
+            onValueChange = { phoneBook.address },
             label = { Text(text = "Address...") }
         )
         Spacer(modifier = Modifier.height(10.dp))
@@ -88,11 +99,21 @@ fun DataStoreContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = { viewModel.saveData() }) {
+            Button(
+                onClick = {
+                    onSave(
+                        PhoneBook(
+                            name = phoneBook.name,
+                            address = phoneBook.address,
+                            phone = phoneBook.phone
+                        )
+                    )
+                }
+            ) {
                 Text(text = "Save Data")
             }
             Button(
-                onClick = { navController.navigate(AppScreens.DataStoreResult.route) },
+                onClick = navigateEvent,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colors.secondary
                 )
@@ -111,5 +132,23 @@ fun DataStoreContent(
                 }
             }
         }
+    }
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun DefaultPreviewDataStoreContent() {
+    CustomExamplesTheme {
+        DataStoreContent(
+            phoneBook = PhoneBook("name", "address", "phone"),
+//            phone = "212345",
+//            address = "address",
+//            name = "name",
+//            setPhone = { "phone" },
+//            setAddress = { "setAddress" },
+//            setName = { "setName" },
+            onSave = {},
+            navigateEvent = {}
+        )
     }
 }

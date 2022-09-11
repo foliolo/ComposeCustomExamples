@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
+import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 
 @Composable
 fun ScreenA(navController: NavController) {
@@ -51,6 +52,8 @@ fun ScreenA(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreviewScreenA() {
-    val navController = rememberNavController()
-    ScreenA(navController)
+    CustomExamplesTheme {
+        val navController = rememberNavController()
+        ScreenA(navController)
+    }
 }
