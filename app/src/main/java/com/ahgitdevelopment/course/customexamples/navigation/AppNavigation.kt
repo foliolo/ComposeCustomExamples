@@ -13,6 +13,8 @@ import com.ahgitdevelopment.course.customexamples.features.screens.splash.Splash
 import com.ahgitdevelopment.course.customexamples.features.screens.LazyListScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreResultScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreScreen
+import com.ahgitdevelopment.course.customexamples.features.screens.datastore.timer.TimerScreen
+import com.ahgitdevelopment.course.customexamples.features.screens.splash.SplashScreen
 
 @Composable
 fun AppNavigation() {
@@ -44,6 +46,9 @@ fun AppNavigation() {
         }
         composable(route = AppScreens.DataStoreResultScreen.route) {
             DataStoreResultScreen(navController)
+        }
+        composable(route = AppScreens.TimerScreen.route) {
+            TimerScreen()
         }
     }
 }
