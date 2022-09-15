@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 private const val SECOND: Long = 1_000L
@@ -25,63 +27,62 @@ class TimerViewModel @Inject constructor(
     private val _elapsedTime = MutableStateFlow(0L)
     val elapsedTime: StateFlow<Long> = _elapsedTime
 
-    fun startTimer() {
+//    val time: StateFlow<Long> = timerLocalRepository.getTimer()
+//        .stateIn(
+//            scope = viewModelScope,
+//            started = SharingStarted.Eagerly,
+//            initialValue = TIMER
+//        )
+
+
+    init {
+//        val cutOff: Long = Date().time + TimeUnit.MILLISECONDS.convert(5, TimeUnit.MINUTES)
+
         viewModelScope.launch {
-            if (_elapsedTime.value <= 0) {
-                Log.i("Timer", "startTimer _elapsedTime.value ${_elapsedTime.value}")
-                val selectedInterval = 15_000L
-                val triggerTime = SystemClock.elapsedRealtime() + selectedInterval
-
-                saveTime(triggerTime)
-            }
-        }
-    }
-
-    private fun saveTime(time: Long) {
-        viewModelScope.launch {
-            timerLocalRepository.saveTimer(time)
-        }
-        getData()
-    }
-
-    private fun getData() {
-        viewModelScope.launch {
-            timerLocalRepository.getTimer().catch { error ->
-                Log.e(
-                    this@TimerViewModel.javaClass.name,
-                    "Error reading preferences.",
-                    error
-                )
-            }.collect {
-                Log.i(
-                    "Timer",
-                    "collect: timer = $it"
-                )
-                createTimer(it)
-            }
-        }
-    }
-
-    private fun createTimer(triggerTime: Long) {
-        Log.i("Timer", "createTimer _elapsedTime.value ${_elapsedTime.value}")
-        timer = object : CountDownTimer(triggerTime, SECOND) {
-            override fun onTick(millisUntilFinished: Long) {
-                _elapsedTime.value = triggerTime - SystemClock.elapsedRealtime()
-                Log.i("Timer", "onTick _elapsedTime.value ${_elapsedTime.value}")
-                if (_elapsedTime.value <= 0) {
-                    resetTimer()
+            timerLocalRepository.getTimer().collect { remainTime ->
+                if (remainTime > 1_000) {
+                    remainTime.initCountDownTimer()
                 }
+            }
+        }
+    }
+
+    fun startTimer() {
+        Log.i("Timer", "startTimer _elapsedTime.value ${_elapsedTime.value}")
+        if (_elapsedTime.value < 1_000) {
+            TIMER.initCountDownTimer()
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        saveTimer(_elapsedTime.value)
+    }
+
+    private fun saveTimer(tick: Long) {
+        viewModelScope.launch {
+            timerLocalRepository.saveTimer(tick)
+        }
+    }
+
+    private fun Long.initCountDownTimer() {
+        object : CountDownTimer(this, INTERVAL) {
+            override fun onTick(millisUntilFinished: Long) {
+                _elapsedTime.value = millisUntilFinished
+//                saveTimer(millisUntilFinished)
+                Log.i("Timer", "onTick millisUntilFinished $millisUntilFinished")
             }
 
             override fun onFinish() {
-                resetTimer()
+                Log.i("Timer", "onFinish: ")
             }
-        }
-        timer.start()
+        }.start()
     }
 
-    private fun resetTimer() {
-        timer.cancel()
-        _elapsedTime.value = 0
+    companion object {
+        private const val INTERVAL: Long = 1_000L
+        private const val TIMER: Long = 20_000L
     }
 }
+
+
