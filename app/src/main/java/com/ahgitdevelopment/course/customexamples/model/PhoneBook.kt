@@ -3,10 +3,12 @@ package com.ahgitdevelopment.course.customexamples.model
 import androidx.compose.runtime.saveable.mapSaver
 
 data class PhoneBook(
-    var name: String,
-    var address: String,
-    var phone: String
-)
+    val name: String,
+    val address: String,
+    val phone: String
+) {
+    fun isEmpty() = name.isEmpty() && address.isEmpty() && phone.isEmpty()
+}
 
 val PhoneBookSaver = run {
     val nameKey = "name"

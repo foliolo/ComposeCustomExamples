@@ -17,21 +17,26 @@ class DataStoreViewModel @Inject constructor(
     private val phoneBookLocalRepository: PhoneBookRepositoryImpl
 ) : ViewModel() {
 
-    private val _phoneBook = MutableStateFlow(PhoneBook(name = "aa", address = "bb", phone = "cc"))
+    private val _phoneBook = MutableStateFlow(PhoneBook(name = "", address = "", phone = ""))
     val phoneBook: StateFlow<PhoneBook> = _phoneBook
+
+//    val phoneBook: StateFlow<PhoneBook> = phoneBookLocalRepository.getPhoneBook()
+//        .dropWhile { it.isEmpty() }
+//        .stateIn(
+//            scope = viewModelScope,
+//            started = SharingStarted.Lazily,
+//            initialValue = PhoneBook("", "", "")
+//        )
 
     init {
         viewModelScope.launch {
-            phoneBookLocalRepository.getPhoneBook()
-                .catch { error ->
-                    Log.e(
-                        this@DataStoreViewModel.javaClass.name,
-                        "Error reading preferences.",
-                        error
-                    )
-                }.collect {
-                    _phoneBook.value = it
-                }
+            phoneBookLocalRepository.getPhoneBook().catch { error ->
+                Log.e(
+                    this@DataStoreViewModel.javaClass.name, "Error reading preferences.", error
+                )
+            }.collect {
+                _phoneBook.value = it
+            }
         }
     }
 

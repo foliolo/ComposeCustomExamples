@@ -21,7 +21,7 @@ class PhoneBookRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPhoneBook(): Flow<PhoneBook> =
+    override fun getPhoneBook(): Flow<PhoneBook> =
         userPreferencesRepository.data.map { preferences ->
             PhoneBook(
                 name = preferences[NAME_KEY] ?: "",
@@ -29,7 +29,6 @@ class PhoneBookRepositoryImpl @Inject constructor(
                 phone = preferences[PHONE_NUMBER_KEY] ?: ""
             )
         }
-
 
     companion object {
         private val NAME_KEY = stringPreferencesKey("NAME")

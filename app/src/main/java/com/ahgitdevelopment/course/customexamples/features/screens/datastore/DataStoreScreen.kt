@@ -34,17 +34,19 @@ import com.ahgitdevelopment.course.customexamples.model.PhoneBook
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
 import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
+@ExperimentalLifecycleComposeApi
 @Composable
 fun DataStoreScreen(
-    navController: NavController, viewModel: DataStoreViewModel = hiltViewModel()
+    navController: NavController,
+    viewModel: DataStoreViewModel = hiltViewModel()
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val phoneBook by viewModel.phoneBook.collectAsStateWithLifecycle(lifecycleOwner)
+//    val phoneBook by viewModel.phoneBook.collectAsState()
 
     DataStoreContent(
         phoneBook = phoneBook,
-        onSave = { viewModel.saveData(it) }
+        onSave = { viewModel.saveData(it) },
     ) {
         navController.navigate(AppScreens.DataStoreResultScreen.route)
     }
@@ -56,13 +58,13 @@ fun DataStoreContent(
     onSave: (PhoneBook) -> Unit,
     navigateEvent: () -> Unit
 ) {
-    // val phone by rememberSaveable(stateSaver = PhoneBookSaver) { mutableStateOf(phoneBook) }
+//    val statePhoneBook by rememberSaveable(stateSaver = PhoneBookSaver) { mutableStateOf(phoneBook) }
 
     // If this state is needed in the viewModel in order to do something,
     // hoisting this will be needed.
     var name by rememberSaveable { mutableStateOf(phoneBook.name) }
-    var phone by rememberSaveable { mutableStateOf(phoneBook.phone) }
-    var address by rememberSaveable { mutableStateOf(phoneBook.address) }
+//    var phone by rememberSaveable { mutableStateOf(phoneBook.phone) }
+//    var address by rememberSaveable { mutableStateOf(phoneBook.address) }
 
     Column(
         modifier = Modifier
@@ -80,13 +82,13 @@ fun DataStoreContent(
             onValueChange = { name = it },
             label = { Text(text = "Name...") })
 
-        OutlinedTextField(value = phone,
-            onValueChange = { phone = it },
-            label = { Text(text = "Phone...") })
-
-        OutlinedTextField(value = address,
-            onValueChange = { address = it },
-            label = { Text(text = "Address...") })
+//        OutlinedTextField(value = phone,
+//            onValueChange = { phone = it },
+//            label = { Text(text = "Phone...") })
+//
+//        OutlinedTextField(value = address,
+//            onValueChange = { address = it },
+//            label = { Text(text = "Address...") })
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -97,8 +99,8 @@ fun DataStoreContent(
                 onSave(
                     PhoneBook(
                         name = name,
-                        phone = phone,
-                        address = address
+                        phone = "",
+                        address = ""
                     )
                 )
             }) {

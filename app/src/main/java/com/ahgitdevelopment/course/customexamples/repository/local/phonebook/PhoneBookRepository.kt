@@ -7,5 +7,5 @@ interface PhoneBookRepository {
 
     suspend fun savePhoneBook(phoneBook: PhoneBook)
 
-    suspend fun getPhoneBook(): Flow<PhoneBook>
+    fun getPhoneBook(): Flow<PhoneBook>
 }
