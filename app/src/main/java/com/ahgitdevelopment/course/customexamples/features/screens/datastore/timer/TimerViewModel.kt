@@ -22,7 +22,7 @@ class TimerViewModel @Inject constructor(
     private val timerLocalRepository: TimerRepositoryImpl
 ) : ViewModel() {
 
-    private lateinit var timer: CountDownTimer
+    private val currentTime = Calendar.getInstance().time.time
 
     private val _elapsedTime = MutableStateFlow(0L)
     val elapsedTime: StateFlow<Long> = _elapsedTime
@@ -36,12 +36,11 @@ class TimerViewModel @Inject constructor(
 
 
     init {
-//        val cutOff: Long = Date().time + TimeUnit.MILLISECONDS.convert(5, TimeUnit.MINUTES)
-
         viewModelScope.launch {
             timerLocalRepository.getTimer().collect { remainTime ->
-                if (remainTime > 1_000) {
-                    remainTime.initCountDownTimer()
+                if (remainTime > currentTime) {
+                    val cutOff = remainTime - currentTime
+                    cutOff.initCountDownTimer()
                 }
             }
         }
@@ -50,13 +49,9 @@ class TimerViewModel @Inject constructor(
     fun startTimer() {
         Log.i("Timer", "startTimer _elapsedTime.value ${_elapsedTime.value}")
         if (_elapsedTime.value < 1_000) {
+            saveTimer(currentTime + TIMER)
             TIMER.initCountDownTimer()
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        saveTimer(_elapsedTime.value)
     }
 
     private fun saveTimer(tick: Long) {
@@ -69,7 +64,6 @@ class TimerViewModel @Inject constructor(
         object : CountDownTimer(this, INTERVAL) {
             override fun onTick(millisUntilFinished: Long) {
                 _elapsedTime.value = millisUntilFinished
-//                saveTimer(millisUntilFinished)
                 Log.i("Timer", "onTick millisUntilFinished $millisUntilFinished")
             }
 
@@ -80,8 +74,8 @@ class TimerViewModel @Inject constructor(
     }
 
     companion object {
-        private const val INTERVAL: Long = 1_000L
-        private const val TIMER: Long = 20_000L
+        private const val INTERVAL: Long = 1_000
+        private const val TIMER: Long = 20_000
     }
 }
 
