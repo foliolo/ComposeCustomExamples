@@ -20,7 +20,7 @@ import com.ahgitdevelopment.course.customexamples.features.screens.splash.Splash
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = AppScreens.TimerScreen.route) {
+    NavHost(navController = navController, startDestination = AppScreens.SplashScreen.route) {
         composable(route = AppScreens.SplashScreen.route) {
             SplashScreen(navController)
         }
