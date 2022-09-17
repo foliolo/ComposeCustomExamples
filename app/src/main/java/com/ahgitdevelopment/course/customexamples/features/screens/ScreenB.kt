@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
+import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -61,6 +62,8 @@ fun ScreenB(navController: NavController, param: String?) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreviewScreenB() {
-    val navController = rememberNavController()
-    ScreenB(navController, "Test")
+    CustomExamplesTheme {
+        val navController = rememberNavController()
+        ScreenB(navController, "Test")
+    }
 }

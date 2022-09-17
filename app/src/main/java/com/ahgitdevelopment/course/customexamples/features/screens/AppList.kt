@@ -7,9 +7,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.ahgitdevelopment.course.customexamples.ItemList
 import com.ahgitdevelopment.course.customexamples.features.activities.ActivityA
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
+import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 
 @Composable
 fun AppList(navController: NavController) {
@@ -33,12 +33,20 @@ fun AppList(navController: NavController) {
                 navController.navigate(AppScreens.ScreenA.route)
             }
         )
+        ItemList(
+            "Data Store Example ",
+            onClick = {
+                navController.navigate(AppScreens.DataStoreScreen.route)
+            }
+        )
     }
 }
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun DefaultPreviewAppList() {
-    val navController = rememberNavController()
-    AppList(navController)
+    CustomExamplesTheme {
+        val navController = rememberNavController()
+        AppList(navController)
+    }
 }

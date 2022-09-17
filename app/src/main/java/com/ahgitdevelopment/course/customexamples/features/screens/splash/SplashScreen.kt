@@ -23,7 +23,6 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.ahgitdevelopment.course.customexamples.R
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
 
@@ -74,6 +73,5 @@ fun Splash(timer: Long) {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun DefaultPreviewSplashScreen() {
-    val navController = rememberNavController()
-    SplashScreen(navController)
+    Splash(2_000)
 }

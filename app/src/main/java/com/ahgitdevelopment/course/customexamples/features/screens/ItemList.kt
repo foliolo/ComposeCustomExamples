@@ -1,4 +1,4 @@
-package com.ahgitdevelopment.course.customexamples
+package com.ahgitdevelopment.course.customexamples.features.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
