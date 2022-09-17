@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
@@ -18,9 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -34,7 +30,7 @@ import com.ahgitdevelopment.course.customexamples.model.PhoneBook
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
 import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 
-@ExperimentalLifecycleComposeApi
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun DataStoreScreen(
     navController: NavController,
@@ -42,7 +38,6 @@ fun DataStoreScreen(
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val phoneBook by viewModel.phoneBook.collectAsStateWithLifecycle(lifecycleOwner)
-//    val phoneBook by viewModel.phoneBook.collectAsState()
 
     DataStoreContent(
         phoneBook = phoneBook,
@@ -58,13 +53,6 @@ fun DataStoreContent(
     onSave: (PhoneBook) -> Unit,
     navigateEvent: () -> Unit
 ) {
-//    val statePhoneBook by rememberSaveable(stateSaver = PhoneBookSaver) { mutableStateOf(phoneBook) }
-
-    // If this state is needed in the viewModel in order to do something,
-    // hoisting this will be needed.
-    var name by rememberSaveable { mutableStateOf(phoneBook.name) }
-//    var phone by rememberSaveable { mutableStateOf(phoneBook.phone) }
-//    var address by rememberSaveable { mutableStateOf(phoneBook.address) }
 
     Column(
         modifier = Modifier
@@ -74,54 +62,39 @@ fun DataStoreContent(
     ) {
 
         Text(
-            text = "Hello, ${name}!",
+            text = "Hello, ${phoneBook.name}!",
             modifier = Modifier.padding(bottom = 8.dp),
             style = MaterialTheme.typography.h5
         )
-        OutlinedTextField(value = name,
-            onValueChange = { name = it },
+        OutlinedTextField(value = phoneBook.name,
+            onValueChange = { onSave(phoneBook.copy(name = it)) },
             label = { Text(text = "Name...") })
 
-//        OutlinedTextField(value = phone,
-//            onValueChange = { phone = it },
-//            label = { Text(text = "Phone...") })
-//
-//        OutlinedTextField(value = address,
-//            onValueChange = { address = it },
-//            label = { Text(text = "Address...") })
+        OutlinedTextField(value = phoneBook.phone,
+            onValueChange = { onSave(phoneBook.copy(phone = it)) },
+            label = { Text(text = "Phone...") })
+
+        OutlinedTextField(value = phoneBook.address,
+            onValueChange = { onSave(phoneBook.copy(address = it)) },
+            label = { Text(text = "Address...") })
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
+        Button(
+            onClick = navigateEvent, colors = ButtonDefaults.buttonColors(
+                backgroundColor = MaterialTheme.colors.secondary
+            )
         ) {
-            Button(onClick = {
-                onSave(
-                    PhoneBook(
-                        name = name,
-                        phone = "",
-                        address = ""
-                    )
-                )
-            }) {
-                Text(text = "Save Data")
-            }
-            Button(
-                onClick = navigateEvent, colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colors.secondary
-                )
+            Row(
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceAround,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Next Screen"
-                    )
-                    Icon(
-                        imageVector = Icons.Default.ArrowRight, contentDescription = "Right arrow"
-                    )
-                }
+                Text(
+                    text = "Next Screen"
+                )
+                Icon(
+                    imageVector = Icons.Default.ArrowRight, contentDescription = "Right arrow"
+                )
             }
         }
     }

@@ -6,9 +6,7 @@ data class PhoneBook(
     val name: String,
     val address: String,
     val phone: String
-) {
-    fun isEmpty() = name.isEmpty() && address.isEmpty() && phone.isEmpty()
-}
+)
 
 val PhoneBookSaver = run {
     val nameKey = "name"

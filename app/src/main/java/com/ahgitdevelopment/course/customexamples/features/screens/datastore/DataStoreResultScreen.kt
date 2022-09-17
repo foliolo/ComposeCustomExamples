@@ -27,10 +27,6 @@ fun DataStoreResultScreen(
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val phoneBook by viewModel.phoneBook.collectAsStateWithLifecycle(lifecycleOwner)
-//    val phoneBook by viewModel.phoneBook.collectAsStateWithLifecycle(
-//        initialValue = PhoneBook("", "", ""),
-//        lifecycleOwner = lifecycleOwner
-//    )
 
     DataStoreResultContent(phoneBook = phoneBook)
 }
