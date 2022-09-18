@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
 
 @Composable
-fun TopAppBar(navController: NavController, title: String){
+fun TopAppBar(navController: NavController, title: String) {
     TopAppBar(
         title = { Text(title) },
         navigationIcon = {

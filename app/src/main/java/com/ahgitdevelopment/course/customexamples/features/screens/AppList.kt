@@ -36,7 +36,7 @@ fun AppList(navController: NavController) {
         ItemList(
             "Lazy List Screen",
             onClick = {
-                navController.navigate(AppScreens.ExampleListScreen.route)
+                navController.navigate(AppScreens.LazyListScreen.route)
             }
         )
         ItemList(
