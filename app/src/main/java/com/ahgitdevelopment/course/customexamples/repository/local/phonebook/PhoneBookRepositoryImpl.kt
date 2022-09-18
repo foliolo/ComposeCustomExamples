@@ -1,5 +1,6 @@
 package com.ahgitdevelopment.course.customexamples.repository.local.phonebook
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -15,18 +16,18 @@ class PhoneBookRepositoryImpl @Inject constructor(
 
     override suspend fun savePhoneBook(phoneBook: PhoneBook) {
         userPreferencesRepository.edit { preferences ->
-            preferences[NAME_KEY] = phoneBook.name
-            preferences[PHONE_NUMBER_KEY] = phoneBook.phone
-            preferences[ADDRESS_KEY] = phoneBook.address
+            preferences[NAME_KEY] = phoneBook.name.value
+            preferences[PHONE_NUMBER_KEY] = phoneBook.phone.value
+            preferences[ADDRESS_KEY] = phoneBook.address.value
         }
     }
 
     override fun getPhoneBook(): Flow<PhoneBook> =
         userPreferencesRepository.data.map { preferences ->
             PhoneBook(
-                name = preferences[NAME_KEY] ?: "",
-                address = preferences[ADDRESS_KEY] ?: "",
-                phone = preferences[PHONE_NUMBER_KEY] ?: ""
+                name = mutableStateOf(preferences[NAME_KEY] ?: ""),
+                address = mutableStateOf(preferences[ADDRESS_KEY] ?: ""),
+                phone = mutableStateOf(preferences[PHONE_NUMBER_KEY] ?: "")
             )
         }
 
