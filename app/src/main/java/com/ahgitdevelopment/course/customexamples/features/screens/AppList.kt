@@ -2,7 +2,7 @@ package com.ahgitdevelopment.course.customexamples.features.screens
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -34,6 +34,12 @@ fun AppList(navController: NavController) {
             }
         )
         ItemList(
+            "Lazy List Screen",
+            onClick = {
+                navController.navigate(AppScreens.LazyListScreen.route)
+            }
+        )
+        ItemList(
             "Data Store Example ",
             onClick = {
                 navController.navigate(AppScreens.DataStoreScreen.route)
@@ -41,6 +47,8 @@ fun AppList(navController: NavController) {
         )
     }
 }
+
+
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
