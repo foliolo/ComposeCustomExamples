@@ -1,11 +1,11 @@
 package com.ahgitdevelopment.course.customexamples.repository.local.timer
 
-import androidx.datastore.preferences.core.Preferences
+import com.ahgitdevelopment.course.customexamples.model.CustomCountDownTimer
 import kotlinx.coroutines.flow.Flow
 
 interface TimerRepository {
 
-    suspend fun saveTimer(key: Preferences.Key<Long>, timer: Long)
+    suspend fun saveTimer(customCountDownTimer: CustomCountDownTimer)
 
-    fun getTimer(key: Preferences.Key<Long>): Flow<Long>
+    fun getTimer(key: String): Flow<CustomCountDownTimer>
 }

@@ -7,14 +7,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ahgitdevelopment.course.customexamples.features.screens.AppList
+import com.ahgitdevelopment.course.customexamples.features.screens.LazyListScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.ScreenA
 import com.ahgitdevelopment.course.customexamples.features.screens.ScreenB
-import com.ahgitdevelopment.course.customexamples.features.screens.splash.SplashScreen
-import com.ahgitdevelopment.course.customexamples.features.screens.LazyListScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreResultScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreScreen
-import com.ahgitdevelopment.course.customexamples.features.screens.datastore.timer.TimerScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.splash.SplashScreen
+import com.ahgitdevelopment.course.customexamples.features.screens.timer.TimerScreen
 
 @Composable
 fun AppNavigation() {
