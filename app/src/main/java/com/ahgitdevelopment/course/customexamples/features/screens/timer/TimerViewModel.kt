@@ -23,7 +23,10 @@ class TimerViewModel @Inject constructor(
 
     val timers: List<StateFlow<CustomCountDownTimer>> = TIMERS.map { customCountDownTimer ->
         timerLocalRepository.getTimer(customCountDownTimer.id)
-            .dropWhile { it.getRemainTime().value < INTERVAL } // I don't know why sometimes there are null values when it shouldn't
+            // I don't know why sometimes there are null values when it shouldn't
+            .dropWhile {
+                it == null || it.getRemainTime().value < INTERVAL
+            }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
@@ -54,6 +57,10 @@ class TimerViewModel @Inject constructor(
                 ),
                 CustomCountDownTimer(
                     "timer2",
+                    Calendar.getInstance().time
+                ),
+                CustomCountDownTimer(
+                    "timer3",
                     Calendar.getInstance().time
                 )
             )
