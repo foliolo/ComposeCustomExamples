@@ -1,17 +1,17 @@
 package com.ahgitdevelopment.course.customexamples.features.screens.timer
 
-import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ahgitdevelopment.course.customexamples.model.CustomCountDownTimer
 import com.ahgitdevelopment.course.customexamples.model.CustomCountDownTimer.Companion.INTERVAL
+import com.ahgitdevelopment.course.customexamples.model.toSeconds
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -37,40 +38,50 @@ fun TimerScreen(
         it.value
     }
 
-    LazyColumn(
+    Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        items(timers.dropWhile { it == null }) { customCountDownTimer ->
-            Log.d("TimeScreen", customCountDownTimer.toString())
-            CountDownText(customCountDownTimer, onClick = {
+        CountDownText(
+            timers.component1(),
+            onClick = {
                 viewModel.startTimer(it)
             })
-        }
+        CountDownText(
+            timers.component2(),
+            onClick = {
+                viewModel.startTimer(it)
+            }
+        )
     }
 }
 
 @Composable
 private fun CountDownText(
-    customCountDownTimer: CustomCountDownTimer, onClick: (CustomCountDownTimer) -> Unit
+    customCountDownTimer: CustomCountDownTimer,
+    onClick: (CustomCountDownTimer) -> Unit
 ) {
 
-//    var remainTime by rememberSaveable {
-//        customCountDownTimer.remainTime
-//    }
+    var remainTimeState by rememberSaveable {
+        customCountDownTimer.getRemainTime()
+    }
 
     val color by animateColorAsState(
-        targetValue = if (customCountDownTimer.remainTime.value < INTERVAL) MaterialTheme.colors.primary
-        else if (customCountDownTimer.remainTime.value > 6_000) Color.DarkGray else Color.Red
+        targetValue = if (remainTimeState < INTERVAL) MaterialTheme.colors.primary
+        else if (remainTimeState > 6_000) Color.DarkGray else Color.Red
     )
 
     customCountDownTimer.start(
-        onTick = { customCountDownTimer.remainTime.value = it },
-        onFinish = { customCountDownTimer.remainTime.value = 0L }
+        onTick = { remainTimeState = it },
+        onFinish = { remainTimeState = 0L }
     )
 
-    Text(text = if (customCountDownTimer.remainTime.value < INTERVAL) "Start" else customCountDownTimer.remainTime.toString(),
+    Text(
+        text = if (remainTimeState < INTERVAL)
+            "Start"
+        else
+            remainTimeState.toSeconds().toString(),
         color = color,
         style = MaterialTheme.typography.h4.copy(
             fontWeight = FontWeight.W600
@@ -78,29 +89,8 @@ private fun CountDownText(
         modifier = Modifier
             .padding(8.dp)
             .clickable {
-                if (customCountDownTimer.remainTime.value < INTERVAL) onClick(customCountDownTimer)
-            })
-
-
+                if (remainTimeState < INTERVAL)
+                    onClick(customCountDownTimer)
+            }
+    )
 }
-
-
-//@Composable
-//private fun CountDownText(elapsedTime: Long) {
-//    val div = elapsedTime.div(1000)
-//    val second = DateUtils.formatElapsedTime(div)
-//    val color by animateColorAsState(
-//        targetValue = if (elapsedTime < 1_000) MaterialTheme.colors.primary
-//        else if (elapsedTime > 6_000) Color.DarkGray else Color.Red
-//    )
-//    Text(text = if (elapsedTime < 1_000) "Start" else second,
-//        color = color,
-//        style = MaterialTheme.typography.h4.copy(
-//            fontWeight = FontWeight.W600
-//        ),
-//        modifier = Modifier
-//            .padding(8.dp)
-//            .clickable {
-//                onClick()
-//            })
-//}

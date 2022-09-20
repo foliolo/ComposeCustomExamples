@@ -1,24 +1,20 @@
 package com.ahgitdevelopment.course.customexamples.features.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.ahgitdevelopment.course.customexamples.features.components.TopAppBar
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
 import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 
@@ -27,7 +23,7 @@ import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 fun ScreenB(navController: NavController, param: String?) {
 
     Scaffold(topBar = {
-        com.ahgitdevelopment.course.customexamples.features.components.TopAppBar(
+        TopAppBar(
             navController = navController,
             title = AppScreens.ScreenB.route
         )
