@@ -35,9 +35,7 @@ fun TimerScreen(
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val timers = viewModel.timers.map {
-        it.collectAsStateWithLifecycle(lifecycleOwner)
-    }.map {
-        it.value
+        it.collectAsStateWithLifecycle(lifecycleOwner).value
     }
 
     LazyColumn(
@@ -48,12 +46,13 @@ fun TimerScreen(
         items(timers) { customCountDownTimer ->
             Log.d("TimeScreen", customCountDownTimer.toString())
             CountDownText(
-                customCountDownTimer, onClick = {
+                customCountDownTimer,
+                onClick = {
                     viewModel.startTimer(it)
-                })
+                }
+            )
         }
     }
-
 }
 
 @Composable
