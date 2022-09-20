@@ -40,9 +40,15 @@ fun AppList(navController: NavController) {
             }
         )
         ItemList(
-            "Data Store Example ",
+            "Data Store Example",
             onClick = {
                 navController.navigate(AppScreens.DataStoreScreen.route)
+            }
+        )
+        ItemList(
+            "Data Store Timer",
+            onClick = {
+                navController.navigate(AppScreens.TimerScreen.route)
             }
         )
     }
