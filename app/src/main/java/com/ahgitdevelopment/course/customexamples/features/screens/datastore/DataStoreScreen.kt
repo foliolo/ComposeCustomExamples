@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -62,39 +64,46 @@ fun DataStoreContent(
     ) {
 
         Text(
-            text = "Hello, ${phoneBook.name}!",
+            text = "Hello, ${phoneBook.name.value}!",
             modifier = Modifier.padding(bottom = 8.dp),
             style = MaterialTheme.typography.h5
         )
-        OutlinedTextField(value = phoneBook.name,
-            onValueChange = { onSave(phoneBook.copy(name = it)) },
+        OutlinedTextField(value = phoneBook.name.value,
+            onValueChange = { phoneBook.name.value = it },
             label = { Text(text = "Name...") })
 
-        OutlinedTextField(value = phoneBook.phone,
-            onValueChange = { onSave(phoneBook.copy(phone = it)) },
+        OutlinedTextField(value = phoneBook.phone.value,
+            onValueChange = { phoneBook.phone.value = it },
             label = { Text(text = "Phone...") })
 
-        OutlinedTextField(value = phoneBook.address,
-            onValueChange = { onSave(phoneBook.copy(address = it)) },
+        OutlinedTextField(value = phoneBook.address.value,
+            onValueChange = { phoneBook.address.value = it },
             label = { Text(text = "Address...") })
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Button(
-            onClick = navigateEvent, colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.secondary
-            )
+        Row(
+            modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceAround,
-                verticalAlignment = Alignment.CenterVertically
+            Button(onClick = { onSave(phoneBook) }) {
+                Text(text = "Save Data")
+            }
+            Button(
+                onClick = navigateEvent, colors = ButtonDefaults.buttonColors(
+                    backgroundColor = MaterialTheme.colors.secondary
+                )
             ) {
-                Text(
-                    text = "Next Screen"
-                )
-                Icon(
-                    imageVector = Icons.Default.ArrowRight, contentDescription = "Right arrow"
-                )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Next Screen"
+                    )
+                    Icon(
+                        imageVector = Icons.Default.ArrowRight, contentDescription = "Right arrow"
+                    )
+                }
             }
         }
     }
@@ -105,7 +114,9 @@ fun DataStoreContent(
 fun DefaultPreviewDataStoreContent() {
     CustomExamplesTheme {
         DataStoreContent(
-            phoneBook = PhoneBook("name", "address", "phone"),
+            phoneBook = PhoneBook(
+                mutableStateOf("name"), mutableStateOf("address"), mutableStateOf("phone")
+            ),
             onSave = {},
             navigateEvent = {}
         )

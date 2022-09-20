@@ -1,5 +1,6 @@
 package com.ahgitdevelopment.course.customexamples.features.screens.datastore
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ahgitdevelopment.course.customexamples.model.PhoneBook
@@ -16,12 +17,13 @@ class DataStoreViewModel @Inject constructor(
     private val phoneBookLocalRepository: PhoneBookRepositoryImpl
 ) : ViewModel() {
 
-    val phoneBook: StateFlow<PhoneBook> = phoneBookLocalRepository.getPhoneBook()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = PhoneBook("", "", "")
+    val phoneBook: StateFlow<PhoneBook> = phoneBookLocalRepository.getPhoneBook().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = PhoneBook(
+            name = mutableStateOf(""), phone = mutableStateOf(""), address = mutableStateOf("")
         )
+    )
 
     fun saveData(phoneBook: PhoneBook) {
         viewModelScope.launch {

@@ -7,6 +7,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -41,17 +42,17 @@ fun DataStoreResultContent(phoneBook: PhoneBook) {
     ) {
 
         Text(
-            text = "Hello, ${phoneBook.name}!",
+            text = "Hello, ${phoneBook.name.value}!",
             modifier = Modifier.padding(bottom = 8.dp),
             style = MaterialTheme.typography.h6
         )
         Text(
-            text = "Your phone is ${phoneBook.phone}!",
+            text = "Your phone is ${phoneBook.phone.value}!",
             modifier = Modifier.padding(bottom = 8.dp),
             style = MaterialTheme.typography.h6
         )
         Text(
-            text = "Your address is ${phoneBook.address}!",
+            text = "Your address is ${phoneBook.address.value}!",
             modifier = Modifier.padding(bottom = 8.dp),
             style = MaterialTheme.typography.h6
         )
@@ -64,9 +65,9 @@ fun DefaultPreviewDataStoreResultContent() {
     CustomExamplesTheme {
         DataStoreResultContent(
             PhoneBook(
-                name = "name",
-                address = "somewhere street",
-                phone = "123456"
+                name = mutableStateOf("name"),
+                address = mutableStateOf("somewhere street"),
+                phone = mutableStateOf("123456")
             )
         )
     }
