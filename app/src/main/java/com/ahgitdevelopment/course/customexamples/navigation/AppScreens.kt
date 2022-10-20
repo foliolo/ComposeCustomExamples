@@ -12,4 +12,5 @@ sealed class AppScreens(val route: String) {
     object DataStoreResultScreen : AppScreens("DataStoreResultScreen")
 
     object TimerScreen : AppScreens("TimerScreen")
+    object MapScreen : AppScreens("MapScreen")
 }

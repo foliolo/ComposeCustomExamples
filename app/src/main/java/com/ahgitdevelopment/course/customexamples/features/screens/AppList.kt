@@ -46,15 +46,19 @@ fun AppList(navController: NavController) {
             }
         )
         ItemList(
-            "Data Store Timer",
+            "Timer",
             onClick = {
                 navController.navigate(AppScreens.TimerScreen.route)
             }
         )
+        ItemList(
+            "Google Map",
+            onClick = {
+                navController.navigate(AppScreens.MapScreen.route)
+            }
+        )
     }
 }
-
-
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable

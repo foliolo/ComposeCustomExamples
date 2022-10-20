@@ -12,6 +12,7 @@ import com.ahgitdevelopment.course.customexamples.features.screens.ScreenA
 import com.ahgitdevelopment.course.customexamples.features.screens.ScreenB
 import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreResultScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreScreen
+import com.ahgitdevelopment.course.customexamples.features.screens.googlemap.MapScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.splash.SplashScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.timer.TimerScreen
 
@@ -48,6 +49,9 @@ fun AppNavigation() {
         }
         composable(route = AppScreens.TimerScreen.route) {
             TimerScreen()
+        }
+        composable(route = AppScreens.MapScreen.route) {
+            MapScreen(navController)
         }
     }
 }
