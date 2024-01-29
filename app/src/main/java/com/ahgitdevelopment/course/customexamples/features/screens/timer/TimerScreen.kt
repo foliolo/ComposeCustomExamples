@@ -21,13 +21,11 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ahgitdevelopment.course.customexamples.model.CustomCountDownTimer
 import com.ahgitdevelopment.course.customexamples.model.CustomCountDownTimer.Companion.INTERVAL
 import com.ahgitdevelopment.course.customexamples.model.toSeconds
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun TimerScreen(
     viewModel: TimerViewModel = hiltViewModel()

@@ -51,6 +51,12 @@ fun AppList(navController: NavController) {
                 navController.navigate(AppScreens.TimerScreen.route)
             }
         )
+        ItemList(
+            "BottomSheet",
+            onClick = {
+                navController.navigate(AppScreens.TimerScreen.route)
+            }
+        )
     }
 }
 

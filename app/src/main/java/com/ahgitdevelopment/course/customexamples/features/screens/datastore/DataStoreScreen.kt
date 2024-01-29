@@ -25,14 +25,12 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.ahgitdevelopment.course.customexamples.model.PhoneBook
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
 import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun DataStoreScreen(
     navController: NavController,
