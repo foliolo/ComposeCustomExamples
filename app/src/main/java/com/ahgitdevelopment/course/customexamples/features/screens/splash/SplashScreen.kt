@@ -19,14 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.ahgitdevelopment.course.customexamples.R
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SplashScreen(navController: NavController, viewModel: SplashViewModel = viewModel()) {
 

@@ -10,6 +10,7 @@ import com.ahgitdevelopment.course.customexamples.features.screens.AppList
 import com.ahgitdevelopment.course.customexamples.features.screens.LazyListScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.ScreenA
 import com.ahgitdevelopment.course.customexamples.features.screens.ScreenB
+import com.ahgitdevelopment.course.customexamples.features.screens.bottomsheet.BottomSheetScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreResultScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.datastore.DataStoreScreen
 import com.ahgitdevelopment.course.customexamples.features.screens.splash.SplashScreen
@@ -19,7 +20,7 @@ import com.ahgitdevelopment.course.customexamples.features.screens.timer.TimerSc
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = AppScreens.SplashScreen.route) {
+    NavHost(navController = navController, startDestination = AppScreens.BottomSheet.route) {
         composable(route = AppScreens.SplashScreen.route) {
             SplashScreen(navController)
         }
@@ -48,6 +49,9 @@ fun AppNavigation() {
         }
         composable(route = AppScreens.TimerScreen.route) {
             TimerScreen()
+        }
+        composable(route = AppScreens.BottomSheet.route) {
+            BottomSheetScreen()
         }
     }
 }
