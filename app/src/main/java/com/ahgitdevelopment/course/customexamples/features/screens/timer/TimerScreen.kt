@@ -65,7 +65,7 @@ private fun CountDownText(
 
     val color by animateColorAsState(
         targetValue = if (remainTimeState < INTERVAL) MaterialTheme.colors.primary
-        else if (remainTimeState > 6_000) Color.DarkGray else Color.Red
+        else if (remainTimeState > 6_000) Color.DarkGray else Color.Red, label = ""
     )
 
     customCountDownTimer.start(
