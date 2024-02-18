@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ahgitdevelopment.course.customexamples.features.activities.ActivityA
+import com.ahgitdevelopment.course.customexamples.features.screens.bottomsheet.BottomSheetScreen
 import com.ahgitdevelopment.course.customexamples.navigation.AppScreens
 import com.ahgitdevelopment.course.customexamples.ui.theme.CustomExamplesTheme
 
@@ -54,7 +55,7 @@ fun AppList(navController: NavController) {
         ItemList(
             "BottomSheet",
             onClick = {
-                navController.navigate(AppScreens.TimerScreen.route)
+                navController.navigate(AppScreens.BottomSheet.route)
             }
         )
     }
